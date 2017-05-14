@@ -1,0 +1,106 @@
+<ion-content *ngIf="firebase.avatars && firebase.currentUser.avatar">
+
+<div class="profile-container" [style.background]="firebase.avatars[firebase.currentUser.avatar].color">
+  <button ion-button clear color="light" icon-only menuToggle>
+    <ion-icon name="menu"></ion-icon>
+  </button>
+  <img height="125" src="./assets/img/avatars/{{firebase.avatars[firebase.currentUser.avatar]['url']}}" alt="">
+  <h1>{{firebase.currentUser.name}}</h1>
+  <p>{{firebase.currentUser.job}}, {{firebase.currentUser.company}}</p>
+</div>
+  <div padding>
+    <ion-segment color="light" [(ngModel)]="section">
+      <ion-segment-button value="swipe">
+        Swipe dates
+      </ion-segment-button>
+      <ion-segment-button value="dates">
+        Your Dates
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div [ngSwitch]="section">
+
+    <div *ngSwitchCase="'swipe'">
+      <p text-center style="margin-top: 0px; padding: 0px 16px;" *ngIf="firebase.users.length == firebase.dumped.length + dated.length">You're swiped out!</p>
+      <div *ngIf="firebase.users.length !== firebase.dumped.length + dated.length">
+        <p style="margin-top: 0px; padding: 0px 16px;" text-center>Swipe left or right to get dates with other Glimpsers. <strong>Everyone gets 3 dates, so choose carefully!</strong> If you don't match with anyone, your dates will be automatically selected.</p>
+        <ion-list no-lines>
+          <ng-container *ngFor="let date of firebase.users | toArray">
+            <ion-item-sliding (ionDrag)="drag($event, date)" *ngIf="shouldDisplay(date)">
+              <ion-item>
+                <ion-avatar item-left>
+                  <img src="./assets/img/avatars/{{firebase.avatars[date.avatar].url}}">
+                </ion-avatar>
+                <h2>{{date.name}}</h2>
+                <p>{{date.job}}, {{date.company}}</p>
+              </ion-item>
+              <ion-item-options side="left" style="background: #f53d3d;">
+                <button ion-button color="danger">
+                  <ion-icon name="heart"></ion-icon>
+                  Date
+                </button>
+              </ion-item-options>
+              <ion-item-options side="right" style="background: #32db64;">
+                <button ion-button color="secondary">
+                  <ion-icon name="thumbs-down"></ion-icon>
+                  Dump
+                </button>
+              </ion-item-options>
+            </ion-item-sliding>
+          </ng-container>
+        </ion-list>
+      </div>
+    </div>
+
+    <ion-list *ngSwitchCase="'dates'" no-lines padding style="padding-top: 0px;">
+
+      <p text-center *ngIf="!dated.length">Swipe to find love...</p>
+
+      <ng-container *ngIf="firebase.currentUser.dates.date1">
+        <ion-list-header style="border-top: none;">
+          Date 1
+        </ion-list-header>
+        <ion-item>
+          <ion-avatar item-left>
+            <img src="./assets/img/avatars/{{firebase.avatars[firebase.currentUser.dates.date1.avatar].url}}">
+          </ion-avatar>
+          <h2>{{firebase.currentUser.dates.date1.name}}</h2>
+          <p>{{firebase.currentUser.dates.date1.job}}, {{firebase.currentUser.dates.date1.company}}</p>
+        </ion-item>
+      </ng-container>
+
+      <ng-container *ngIf="firebase.currentUser.dates.date2">
+        <ion-list-header style="border-top: none;">
+          Date 2
+        </ion-list-header>
+        <ion-item>
+          <ion-avatar item-left>
+            <img src="./assets/img/avatars/{{firebase.avatars[firebase.currentUser.dates.date2.avatar].url}}">
+          </ion-avatar>
+          <h2>{{firebase.currentUser.dates.date2.name}}</h2>
+          <p>{{firebase.currentUser.dates.date2.job}}, {{firebase.currentUser.dates.date2.company}}</p>
+        </ion-item>
+      </ng-container>
+
+      <ng-container *ngIf="firebase.currentUser.dates.date3">
+        <ion-list-header style="border-top: none;">
+          Date 3
+        </ion-list-header>
+        <ion-item>
+          <ion-avatar item-left>
+            <img src="./assets/img/avatars/{{firebase.avatars[firebase.currentUser.dates.date3.avatar].url}}">
+          </ion-avatar>
+          <h2>{{firebase.currentUser.dates.date3.name}}</h2>
+          <p>{{firebase.currentUser.dates.date3.job}}, {{firebase.currentUser.dates.date3.company}}</p>
+        </ion-item>
+      </ng-container>
+
+    </ion-list>
+
+  </div>
+
+</ion-content>
+
+
+

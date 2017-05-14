@@ -1,0 +1,27 @@
+page-dating {
+    .profile-container{
+        padding: 50px 16px;
+        text-align: center;
+        button{
+            position: absolute;
+            top: 6px;
+            left: 6px;
+        }
+        p{
+            margin-bottom: 0px;
+        }
+    }
+    .list-header-md{
+        margin-bottom: 0px;
+    }
+    ion-item-sliding .item{
+        padding-left: 16px;
+    }
+    ion-item-options button.button{
+        position: absolute;
+        width: 100px;
+    }
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+        border-bottom: none;
+    }
+}

@@ -1,0 +1,30 @@
+<ion-content padding>
+  <h1 text-center>Choose your avatar carefully</h1>
+  <p text-center>There are 20 spaces available per avatar group.</p>
+  <div class="avatar-container">
+    <div class="avatar" *ngFor="let avatar of firebase.avatars | toArray, let i = index">
+      <div (click)="launchModal(i)" style="position: relative;">
+        <img src="./assets/img/avatars/{{avatar.url}}">
+        <div class="selected" *ngIf="avatar.url == selectedAvatar.url">
+          <ion-icon name="checkmark"></ion-icon>
+        </div>
+        <div class="unavailable" *ngIf="avatar.spaces == 0">
+          <ion-icon name="close"></ion-icon>
+        </div>
+      </div>
+      <p style="text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">{{avatar.name}}</p>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="dark">
+    <p style="color: #fff; margin-left: 10px;"><strong>{{selectedAvatar.name}}</strong></p>
+    <ion-buttons end>
+      <button ion-button icon-right (click)="next()" [disabled]="!selectedAvatar.url">
+        Next
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

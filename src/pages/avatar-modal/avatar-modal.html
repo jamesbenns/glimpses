@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons start>
+      <button ion-button icon-left (click)="dismiss(false)">
+        <ion-icon name="arrow-back"></ion-icon>
+        Back
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+
+<ion-slides pager [initialSlide]="index">
+
+  <ion-slide class="avatar-slide" *ngFor="let avatar of firebase.avatars | toArray">
+    <div style="position: relative; margin-top: -40px;">
+      <img src="./assets/img/avatars/{{avatar.url}}">
+      <div class="unavailable" *ngIf="avatar.spaces == 0">
+        <ion-icon name="close"></ion-icon>
+      </div>
+    </div>
+    <h1 text-center>{{avatar.name}}</h1>
+    <p>{{avatar.description}}</p>
+    <button (click)="dismiss(avatar)" [disabled]="avatar.spaces == 0" ion-button full style="margin-top: 23px;">That's me!</button>
+  </ion-slide>
+
+</ion-slides>
+
+</ion-content>

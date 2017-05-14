@@ -1,0 +1,32 @@
+<ion-content padding>
+
+  <h1>Signup</h1>
+
+  <form #form="ngForm">
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input name="name" type="text" #name="ngModel" [(ngModel)]="user.name" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Company</ion-label>
+      <ion-input name="company" type="text" [(ngModel)]="user.company" required></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Job Title</ion-label>
+      <ion-input name="job" type="text" [(ngModel)]="user.job" required></ion-input>
+    </ion-item>
+  </form>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="dark">
+    <ion-buttons end>
+      <button ion-button icon-right (click)="signUp()" [disabled]="form.invalid">
+        Next
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>

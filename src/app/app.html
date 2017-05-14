@@ -1,0 +1,18 @@
+<ion-menu enabled="false" [content]="nav">
+  <ion-content style="background: #222;">
+    <!--<div padding style="padding-bottom: 0px; padding-top: 32px;">
+        <img style="width: 30%; display: block; margin: 0 auto;" src="assets/img/eye.png">
+        <img style="width: 50%; display: block; margin: 0 auto;" src="assets/img/glimpses.png">
+    </div>-->
+    <ion-list inset>
+      <button menuClose style="background: #222;" ion-item (click)="home()">
+        Dates
+      </button>
+      <button menuClose *ngFor="let page of pages" style="background: #222;" ion-item (click)="goTo(page)">
+        {{page.name}}
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-nav #nav></ion-nav>

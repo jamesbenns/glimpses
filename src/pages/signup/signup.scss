@@ -1,0 +1,11 @@
+page-signup {
+    .scroll-content{
+        padding: 50px !important;
+    }
+    .ng-touched.ng-invalid.item-input .item-inner{
+        border-bottom-color: red;
+    }
+    .ng-touched.ng-valid.item-input .item-inner{
+        border-bottom-color: greenyellow;
+    }
+}

@@ -1,0 +1,20 @@
+<ion-content padding>
+  <h1>How can we reach maximum human potential?</h1>
+
+  <ion-item>
+    <ion-label floating>{{150 - answer.length}} characters remaining</ion-label>
+    <ion-textarea name="question" #question="ngModel" required minlength="20" maxlength="150" rows="7" type="text" [(ngModel)]="answer"></ion-textarea>
+  </ion-item>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar color="dark">
+    <ion-buttons end>
+      <button ion-button icon-right [disabled]="!question.valid" (click)="next()">
+        Next
+        <ion-icon name="arrow-forward"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-footer>
