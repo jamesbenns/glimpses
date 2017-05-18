@@ -1,3 +1,8 @@
 page-schedule {
-
+    .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+        border-bottom: none;
+    }
+    .item-divider-md{
+        border-bottom: none;
+    }
 }

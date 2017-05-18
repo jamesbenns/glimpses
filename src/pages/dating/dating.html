@@ -1,4 +1,4 @@
-<ion-content *ngIf="firebase.avatars && firebase.currentUser.avatar">
+<ion-content *ngIf="firebase.avatars && firebase.currentUser">
 
 <div class="profile-container" [style.background]="firebase.avatars[firebase.currentUser.avatar].color">
   <button ion-button clear color="light" icon-only menuToggle>
@@ -22,9 +22,10 @@
   <div [ngSwitch]="section">
 
     <div *ngSwitchCase="'swipe'">
-      <p text-center style="margin-top: 0px; padding: 0px 16px;" *ngIf="firebase.users.length == firebase.dumped.length + dated.length">You're swiped out!</p>
-      <div *ngIf="firebase.users.length !== firebase.dumped.length + dated.length">
-        <p style="margin-top: 0px; padding: 0px 16px;" text-center>Swipe left or right to get dates with other Glimpsers. <strong>Everyone gets 3 dates, so choose carefully!</strong> If you don't match with anyone, your dates will be automatically selected.</p>
+      <p text-center style="padding: 0px 16px;" *ngIf="firebase.dumped.length == firebase.users.length - 1">You're swiped out!</p>
+      <p text-center style="padding: 0px 16px;" *ngIf="!datesLeft()">Your diary is full...</p>
+      <div *ngIf="datesLeft() && firebase.dumped.length + (3 - datesLeft()) !== firebase.users.length -1">
+        <p style="margin-top: 0px; padding: 0px 16px;" text-center>Swipe left to date or right to dump. <strong>Everyone gets 3 dates, so choose carefully!</strong> If you select less than 3 dates, the remaining slots will be chosen at random.</p>
         <ion-list no-lines>
           <ng-container *ngFor="let date of firebase.users | toArray">
             <ion-item-sliding (ionDrag)="drag($event, date)" *ngIf="shouldDisplay(date)">
@@ -55,7 +56,7 @@
 
     <ion-list *ngSwitchCase="'dates'" no-lines padding style="padding-top: 0px;">
 
-      <p text-center *ngIf="!dated.length">Swipe to find love...</p>
+      <p text-center *ngIf="datesLeft() == 3">Swipe to find love...</p>
 
       <ng-container *ngIf="firebase.currentUser.dates.date1">
         <ion-list-header style="border-top: none;">

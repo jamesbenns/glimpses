@@ -1,15 +1,17 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, MenuController, AlertController, ToastController } from 'ionic-angular';
 import { Firebase } from '../../providers/firebase';
+import { Vibration } from '@ionic-native/vibration';
 
 @IonicPage()
 @Component({
   selector: 'page-dating',
   templateUrl: 'dating.html',
+  providers: [Vibration]
 })
 export class DatingPage {
 
-  constructor(public firebase: Firebase, public menuCtrl: MenuController, public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
+  constructor(public vib: Vibration, public firebase: Firebase, public menuCtrl: MenuController, public navCtrl: NavController, public toastCtrl: ToastController, public alertCtrl: AlertController) {
     this.menuCtrl.enable(true);
   }
 
@@ -26,25 +28,32 @@ export class DatingPage {
     if(event.getOpenAmount() > 100 && !this.modalOpen) {this.modalOpen = true; this.dump(date)}
   }
 
-  dumped = [];
-  dated = [];
-
-  inList(date){
-    if(this.dumped.indexOf(date) == -1 && this.dated.indexOf(date) == -1) return true;
+  datesLeft(){
+    let dates = 3;
+    for(let slot in this.firebase.currentUser.dates){
+      if(this.firebase.currentUser.dates[slot]) dates--
+    }
+    return dates;
   }
 
   shouldDisplay(date){
-    //Don't display themselves
-    if(date.name == this.firebase.currentUser.name) return false;
     //Don't display if dumped already
     if(this.firebase.dumped.indexOf(date.name) !== -1) return false;
     //Check if a date slot matches
+    let freeSlot;
     for(let slot in this.firebase.currentUser.dates){
-      if(!date.dates[slot].user && !this.firebase.currentUser.dates[slot].user) {
-        console.log('slot match', slot)
-        return true
+      //Return false if already got a date with this user
+      if(this.firebase.currentUser.dates[slot].name == date.name) {
+        return false
+      }
+      if(!date.dates[slot] && !this.firebase.currentUser.dates[slot]) {
+        freeSlot = slot;
       }
     }
+    //Don't display themselves
+    if(date.name == this.firebase.currentUser.name) return false;
+    //Return true if freeSlot
+    if(freeSlot) return true;
   }
 
   dump(date){
@@ -58,6 +67,7 @@ export class DatingPage {
     toast.onDidDismiss((data, role) => {
       this.modalOpen = false;
       if (role !== "close") {
+        this.vib.vibrate(50);
         this.firebase.dumped.push(date.name)
       }
     });
@@ -67,7 +77,7 @@ export class DatingPage {
   confirmDate(date){
     let alert = this.alertCtrl.create({
       title: 'Are you sure you want to date '+ date.name +'?',
-      message: 'You have '+ (3 - this.dated.length) +' dates left.',
+      message: 'You have '+ this.datesLeft() +' dates left.',
       buttons: [
         {
           text: 'Cancel',
@@ -81,13 +91,15 @@ export class DatingPage {
           text: 'Yes',
           handler: () => {
             this.modalOpen = false;
-            this.firebase.setDate(date);
             let toast = this.toastCtrl.create({
               message: 'You got a date with ' + date.name + '!',
               duration: 1000,
               position: 'bottom'
             });
-            toast.present();
+            this.firebase.setDate(date).then(()=>{
+              toast.present();
+              this.vib.vibrate(50);
+            })
           }
         }
       ]

@@ -6,13 +6,24 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>presentationSummaries</ion-title>
+  <ion-navbar color="primary">
+    <ion-title>Presentation Summaries</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <ion-list no-lines>
+    <ion-item *ngFor="let pres of firebase.presentations | toArray">
+      <ion-thumbnail item-left>
+        <img [src]="pres.img">
+      </ion-thumbnail>
+      <h2>{{pres.presenter}}</h2>
+      <p>{{pres.presentationName}}</p>
+      <button ion-button clear item-right (click)="openUrl(pres.url)">View</button>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

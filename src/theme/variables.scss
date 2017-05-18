@@ -38,7 +38,21 @@ $colors: (
 // iOS only Sass variables can go here
 
 $item-ios-padding-left: 0px;
+
 $toast-ios-background: #333;
+
+$loading-ios-border-radius: 30px 10px;
+$loading-ios-background: #333;
+$loading-ios-text-color: #fff;
+$loading-ios-spinner-color: #fff;
+
+$alert-ios-border-radius: 30px 10px;
+$alert-ios-background: #333;
+$alert-ios-sub-title-text-color: #fff;
+$alert-ios-head-text-color: #fff;
+$alert-ios-message-text-color: #fff;
+$alert-ios-button-border-width: 0px;
+$alert-ios-button-background-color-activated: #444;
 
 // App Material Design Variables
 // --------------------------------------------------
@@ -46,6 +60,17 @@ $toast-ios-background: #333;
 
 $item-md-padding-left: 0px;
 
+$loading-md-border-radius: 30px 10px;
+$loading-md-background: #333;
+$loading-md-text-color: #fff;
+
+$alert-md-border-radius: 30px 10px;
+$alert-md-background-color: #333;
+$alert-md-sub-title-text-color: #fff;
+$alert-md-head-text-color: #fff;
+$alert-md-message-text-color: #fff;
+$alert-md-button-border-width: 0px;
+$alert-md-button-background-color-activated: #444;
 
 // App Windows Variables
 // --------------------------------------------------

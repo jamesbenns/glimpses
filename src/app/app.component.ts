@@ -41,19 +41,9 @@ export class MyApp {
     this.nav.setRoot(DatingPage)
   }
 
-  monitorConnection(){
-    console.log(this.network.type);
-    let disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-      console.log('network was disconnected :-(');
-    });
-  }
-
   rootPage:any
   constructor(platform: Platform, public network: Network, public firebase: Firebase, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
-
-      this.monitorConnection();
-
       this.firebase.storage.ready().then(
         ()=>{
         this.firebase.storage.get('user').then((val) => {

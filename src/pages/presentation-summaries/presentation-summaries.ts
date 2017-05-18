@@ -1,24 +1,22 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Firebase } from '../../providers/firebase'
+import { InAppBrowser } from '@ionic-native/in-app-browser';
 
-/**
- * Generated class for the PresentationSummaries page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-presentation-summaries',
   templateUrl: 'presentation-summaries.html',
+  providers: [InAppBrowser]
 })
 export class PresentationSummaries {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  openUrl(url){
+    this.iab.create(url, '_self', {location: 'no', zoom: 'no'})
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PresentationSummaries');
+  constructor(public navCtrl: NavController, public navParams: NavParams, public firebase: Firebase, public iab: InAppBrowser) {
+    
   }
 
 }

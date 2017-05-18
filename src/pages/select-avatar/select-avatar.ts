@@ -29,7 +29,7 @@ export class SelectAvatar {
           ()=>{
             this.firebase.signUp().then(
               ()=>{
-                this.firebase.getUser();
+                this.firebase.getUsers();
                 this.app.getRootNav().setRoot(DatingPage);
                 loading.dismiss();
               },
